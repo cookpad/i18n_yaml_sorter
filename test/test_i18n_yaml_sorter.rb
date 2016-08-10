@@ -1,6 +1,6 @@
 require File.dirname(__FILE__) + '/helper'
 
-class TestI18nYamlSorter < Test::Unit::TestCase
+class TestI18nYamlSorter < MiniTest::Test
   def test_should_sort_complex_sample_file
     open(File.dirname(__FILE__) + '/in.yml') do |file|
       sorter = I18nYamlSorter::Sorter.new(file)
@@ -38,11 +38,11 @@ class TestI18nYamlSorter < Test::Unit::TestCase
       assert_equal present, future
     end
   end
-  
+
   def test_command_line_should_work_in_stdin
     output = `#{File.dirname(__FILE__)}/../bin/sort_yaml < #{File.dirname(__FILE__)}/in.yml`
     open(File.dirname(__FILE__) +  '/out.yml') do |expected_out|
-      assert_equal expected_out.read, output 
+      assert_equal expected_out.read, output
     end
   end
 end

@@ -7,12 +7,12 @@ rescue Bundler::BundlerError => e
   $stderr.puts "Run `bundle install` to install missing gems"
   exit e.status_code
 end
-require 'test/unit'
 require 'yaml'
+require 'minitest/autorun'
+require 'pry'
+require 'simplecov'
+SimpleCov.start
 
 $LOAD_PATH.unshift(File.join(File.dirname(__FILE__), '..', 'lib'))
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 require 'i18n_yaml_sorter'
-
-class Test::Unit::TestCase
-end

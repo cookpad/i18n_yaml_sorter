@@ -10,4 +10,10 @@ group :development do
   gem "bundler"
   gem "jeweler", "~> 1.6.4"
   gem "simplecov"
+  gem "minitest"
+  gem "pry"
+end
+
+group :test do
+  gem "simplecov", require: false
 end
