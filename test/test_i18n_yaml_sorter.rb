@@ -28,6 +28,15 @@ class TestI18nYamlSorter < MiniTest::Test
     end
   end
 
+  def test_should_sort_uncommon_keys_correctly
+    open(File.dirname(__FILE__) + '/in_uncommon.yml') do |file|
+      sorter = I18nYamlSorter::Sorter.new(file)
+      open(File.dirname(__FILE__) + '/out_uncommon.yml') do |expected_out|
+        assert_equal expected_out.read, sorter.sort
+      end
+    end
+  end
+
   def test_should_not_alter_the_serialized_yaml
     #ordering should'n t change a thing, since hashes don't have order in Ruby
     open(File.dirname(__FILE__) + '/in.yml') do |file|

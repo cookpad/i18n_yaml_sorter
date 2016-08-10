@@ -1,0 +1,5 @@
+user:
+  name: Name
+user/provider_user/credential:
+  password: Password
+  email: Email

@@ -70,7 +70,7 @@ module I18nYamlSorter
         end #if is_special_string
 
         # Is it the begining of a multi level hash?
-        is_start_of_hash = maybe_next_line.match(/^(\s*)(["']?[\w\-]+["']?)(:)(\s*)$/)
+        is_start_of_hash = maybe_next_line.match(/^(\s*)(["']?[\w\-\/?]+["']?)(:)(\s*)$/)
         if is_start_of_hash
           array << maybe_next_line.concat("\n")
           next
@@ -92,14 +92,13 @@ module I18nYamlSorter
     end
 
     def sorted_yaml_from_blocks_array(current_block = nil)
-
       unless current_block
         current_block = @array[@current_array_index]
         @current_array_index += 1
       end
 
       out_array = []
-      current_match = current_block.match(/^(\s*)(["']?[\w\-]+["']?)(:)/)
+      current_match = current_block.match(yaml_key_regex)
       current_level = current_match[1] rescue ''
       current_key = current_match[2].downcase.tr(%q{"'}, "") rescue ''
       out_array << [current_key, current_block]
@@ -108,7 +107,7 @@ module I18nYamlSorter
         next_block = @array[@current_array_index] || break
         @current_array_index += 1
 
-        current_match = next_block.match(/^(\s*)(["']?[\w\-]+["']?)(:)/) || next
+        current_match = next_block.match(yaml_key_regex) || next
         current_key = current_match[2].downcase.tr(%q{"'}, "")
         next_level = current_match[1]
 
@@ -123,6 +122,10 @@ module I18nYamlSorter
       end
 
       return out_array.sort.map(&:last).join
+    end
+
+    def yaml_key_regex
+      /^(\s*)(["']?[\w\-\/?]+["']?)(:)/
     end
   end
 end
