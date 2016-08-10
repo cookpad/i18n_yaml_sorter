@@ -11,7 +11,7 @@ group :development do
   gem "jeweler", "~> 1.6.4"
   gem "simplecov"
   gem "minitest"
-  gem "pry"
+  gem "pry-byebug"
 end
 
 group :test do
