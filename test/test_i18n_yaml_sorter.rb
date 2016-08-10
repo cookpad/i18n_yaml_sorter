@@ -37,6 +37,15 @@ class TestI18nYamlSorter < MiniTest::Test
     end
   end
 
+  def test_should_preserve_empty_line_when_the_options_is_set_to_false
+    open(File.dirname(__FILE__) + '/in_empty_line.yml') do |file|
+      sorter = I18nYamlSorter::Sorter.new(file, discard_empty_line: false)
+      open(File.dirname(__FILE__) + '/out_empty_line.yml') do |expected_out|
+        assert_equal expected_out.read, sorter.sort
+      end
+    end
+  end
+
   def test_should_not_alter_the_serialized_yaml
     #ordering should'n t change a thing, since hashes don't have order in Ruby
     open(File.dirname(__FILE__) + '/in.yml') do |file|

@@ -1,7 +1,8 @@
 module I18nYamlSorter
   class Sorter
-    def initialize(io_input)
+    def initialize(io_input, discard_empty_line: true)
       @io_input = io_input
+      @discard_empty_line = discard_empty_line
     end
 
     def sort
@@ -22,7 +23,7 @@ module I18nYamlSorter
         maybe_next_line.chomp!
 
         #Is it blank? Discard!
-        next if maybe_next_line.match(/^\s*$/)
+        next if @discard_empty_line && maybe_next_line.match(/^\s*$/)
 
         #Does it look like a key: value line?
         key_value_parse = maybe_next_line.match(/^(\s*)(["']?[\w\-]+["']?)(: )(\s*)(\S.*\S)(\s*)$/)
